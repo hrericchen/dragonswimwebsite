@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dragon Swim Team</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --panel: #f2f2f2;
+      --accent: #111111;
+      --text: #2f2f2f;
+      --muted: #6c6c6c;
+      --border: #dddddd;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      min-height: 85vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 2rem;
+      background: radial-gradient(circle at top right, #f7f7f7, transparent 45%),
+                  radial-gradient(circle at bottom left, #efefef, transparent 40%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 4.25rem);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero p {
+      max-width: 45rem;
+      color: var(--muted);
+      margin: 0 auto;
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+    }
+
+    main {
+      width: min(1100px, 92vw);
+      margin: 3rem auto 5rem;
+      display: grid;
+      gap: 4rem;
+    }
+
+    section {
+      position: relative;
+      isolation: isolate;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 1.2rem;
+      padding: 2rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    section::before,
+    .card::before {
+      content: "";
+      position: absolute;
+      left: var(--mx, 50%);
+      top: var(--my, 50%);
+      width: 260px;
+      height: 260px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(255, 230, 110, 0.32) 0%, rgba(255, 230, 110, 0.08) 45%, rgba(255, 230, 110, 0) 70%);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 0;
+    }
+
+    section:hover::before,
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    section > *,
+    .card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      margin-bottom: 0.85rem;
+      color: #000000;
+    }
+
+    .cards {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      position: relative;
+      isolation: isolate;
+      background: var(--panel);
+      border-radius: 0.9rem;
+      padding: 1rem;
+      border: 1px solid #e4e4e4;
+      overflow: hidden;
+    }
+
+    .card h3 {
+      margin-bottom: 0.3rem;
+      color: #000000;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(42px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      will-change: opacity, transform;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero reveal">
+      <h1>Dragon Swim Team</h1>
+      <p>
+        We train hard, support each other, and race with confidence.
+        Scroll to meet the team and the coaches who help every swimmer grow.
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <section class="reveal" id="team">
+      <h2>About the Team</h2>
+      <p>
+        Dragon Swim Team is a year-round competitive group focused on technique,
+        endurance, and team spirit. From beginners to advanced athletes, we build
+        better swimmers through structured practices and positive energy.
+      </p>
+      <div class="cards">
+        <article class="card">
+          <h3>Training Groups</h3>
+          <p>Age-group, junior, and senior lanes keep every swimmer challenged.</p>
+        </article>
+        <article class="card">
+          <h3>Meet Readiness</h3>
+          <p>Weekly race sets and starts/turns work help swimmers stay prepared.</p>
+        </article>
+        <article class="card">
+          <h3>Team Culture</h3>
+          <p>Respect, discipline, and support define who we are in and out of the pool.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="reveal" id="coaches">
+      <h2>About the Coaches</h2>
+      <p>
+        Our coaching staff combines competitive experience with athlete-first leadership.
+        Each coach works closely with swimmers to improve stroke mechanics, race strategy,
+        and confidence.
+      </p>
+      <div class="cards">
+        <article class="card">
+          <h3>Head Coach Alex Rivera</h3>
+          <p>Specializes in freestyle and IM development with data-driven training plans.</p>
+        </article>
+        <article class="card">
+          <h3>Assistant Coach Maya Chen</h3>
+          <p>Leads stroke clinics and dryland sessions focused on injury prevention.</p>
+        </article>
+        <article class="card">
+          <h3>Assistant Coach Jordan Lee</h3>
+          <p>Supports sprint groups with starts, underwater phases, and race execution.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Dragon Swim Team • Train Strong • Race Smart
+  </footer>
+
+  <script>
+    const revealItems = document.querySelectorAll('.reveal');
+    const flashlightTargets = document.querySelectorAll('section, .card');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.2,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealItems.forEach((item) => observer.observe(item));
+
+    flashlightTargets.forEach((target) => {
+      target.addEventListener('mousemove', (event) => {
+        const rect = target.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        target.style.setProperty('--mx', `${x}px`);
+        target.style.setProperty('--my', `${y}px`);
+      });
+    });
+  </script>
+</body>
+</html>
