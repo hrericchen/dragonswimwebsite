@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dragon Swim Team</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --panel: #f2f2f2;
+      --accent: #111111;
+      --text: #2f2f2f;
+      --muted: #6c6c6c;
+      --border: #dddddd;
+      --button-grad: linear-gradient(135deg, #ff6a2a 0%, #d9481a 100%);
+      --button-grad-hover: linear-gradient(135deg, #ff7a3d 0%, #e25727 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+      color: var(--text);
+      line-height: 1.6;
+      padding-top: 66px;
+    }
+
+    .topbar {
+      position: fixed;
+      top: 0.5rem;
+      left: 0.6rem;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      padding: 0.35rem 0.8rem;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 0.9rem;
+      width: fit-content;
+      transition: backdrop-filter 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .topbar.scrolled {
+      backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px);
+      background: rgba(255, 255, 255, 0.74);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+    }
+
+    .logo {
+      width: min(230px, 52vw);
+      height: auto;
+      display: block;
+    }
+
+    button {
+      border: 0;
+      background: var(--button-grad);
+      color: #ffffff;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 8px 16px rgba(217, 72, 26, 0.28);
+    }
+
+    button:hover {
+      background: var(--button-grad-hover);
+      transform: scale(1.04);
+      box-shadow: 0 12px 22px rgba(217, 72, 26, 0.34);
+    }
+
+    .login-trigger {
+      margin-top: 1.25rem;
+      padding: 0.75rem 1.2rem;
+      border-radius: 999px;
+    }
+
+    header {
+      min-height: 85vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, #ffffff 0%, #f2f2f2 58%, #e8e8e8 100%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 6vw, 4.4rem);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      font-weight: 900;
+      color: #121212;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.65), 0 4px 10px rgba(0,0,0,0.14);
+    }
+
+    .hero p {
+      max-width: 45rem;
+      color: var(--muted);
+      margin: 0 auto;
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+    }
+
+    main {
+      width: min(1100px, 92vw);
+      margin: 3rem auto 5rem;
+      display: grid;
+      gap: 4rem;
+    }
+
+    section {
+      position: relative;
+      isolation: isolate;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 1.2rem;
+      padding: 2rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    section::before,
+    .card::before {
+      content: "";
+      position: absolute;
+      left: var(--mx, 50%);
+      top: var(--my, 50%);
+      width: 260px;
+      height: 260px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(255, 230, 110, 0.32) 0%, rgba(255, 230, 110, 0.08) 45%, rgba(255, 230, 110, 0) 70%);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 0;
+    }
+
+    section:hover::before,
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    section > *,
+    .card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      margin-bottom: 0.85rem;
+      color: #000000;
+    }
+
+    .cards {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      position: relative;
+      isolation: isolate;
+      background: var(--panel);
+      border-radius: 0.9rem;
+      padding: 1rem;
+      border: 1px solid #e4e4e4;
+      overflow: hidden;
+    }
+
+    .card h3 {
+      margin-bottom: 0.3rem;
+      color: #000000;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(42px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      will-change: opacity, transform;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .login-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 2000;
+      background: rgba(20, 20, 20, 0.35);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .login-modal.open {
+      display: flex;
+    }
+
+    .login-box {
+      width: min(420px, 92vw);
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 1rem;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+      padding: 1.35rem;
+    }
+
+    .login-box h3 {
+      color: #000;
+      margin-bottom: 0.25rem;
+      font-size: 1.35rem;
+    }
+
+    .login-box p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .login-form {
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .login-form label {
+      color: #1a1a1a;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .login-form input {
+      width: 100%;
+      border: 1px solid #d7d7d7;
+      border-radius: 0.7rem;
+      padding: 0.7rem 0.8rem;
+      font-size: 0.95rem;
+      margin-top: 0.35rem;
+    }
+
+    .login-actions {
+      margin-top: 0.35rem;
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .signin-btn {
+      border-radius: 0.75rem;
+      padding: 0.75rem;
+    }
+
+    .register-text {
+      text-align: center;
+      font-size: 0.92rem;
+      color: #444;
+    }
+
+    .register-text a {
+      color: #111;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .modal-close {
+      margin-top: 0.2rem;
+      background: transparent;
+      border: 0;
+      color: #666;
+      cursor: pointer;
+      text-decoration: underline;
+      justify-self: center;
+      box-shadow: none;
+      transition: none;
+      transform: none;
+    }
+
+    .modal-close:hover {
+      background: transparent;
+      color: #333;
+      box-shadow: none;
+      transform: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar" id="topbar">
+    <img class="logo" src="images/logo.png" onerror="this.onerror=null;this.src='logo.svg';" alt="Dragon Swim Team logo" />
+  </div>
+
+  <header>
+    <div class="hero reveal">
+      <h1>Dragon Swim Team</h1>
+      <p>
+        We train hard, support each other, and race with confidence.
+        Scroll to meet the team and the coaches who help every swimmer grow.
+      </p>
+      <button class="login-trigger" id="openLogin">Member Login</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="reveal" id="team">
+      <h2>About the Team</h2>
+      <p>
+        Dragon Swim Team is a year-round competitive group focused on technique,
+        endurance, and team spirit. From beginners to advanced athletes, we build
+        better swimmers through structured practices and positive energy.
+      </p>
+      <div class="cards">
+        <article class="card">
+          <h3>Training Groups</h3>
+          <p>Age-group, junior, and senior lanes keep every swimmer challenged.</p>
+        </article>
+        <article class="card">
+          <h3>Meet Readiness</h3>
+          <p>Weekly race sets and starts/turns work help swimmers stay prepared.</p>
+        </article>
+        <article class="card">
+          <h3>Team Culture</h3>
+          <p>Respect, discipline, and support define who we are in and out of the pool.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="reveal" id="coaches">
+      <h2>About the Coaches</h2>
+      <p>
+        Our coaching staff combines competitive experience with athlete-first leadership.
+        Each coach works closely with swimmers to improve stroke mechanics, race strategy,
+        and confidence.
+      </p>
+      <div class="cards">
+        <article class="card">
+          <h3>Head Coach Alex Rivera</h3>
+          <p>Specializes in freestyle and IM development with data-driven training plans.</p>
+        </article>
+        <article class="card">
+          <h3>Assistant Coach Maya Chen</h3>
+          <p>Leads stroke clinics and dryland sessions focused on injury prevention.</p>
+        </article>
+        <article class="card">
+          <h3>Assistant Coach Jordan Lee</h3>
+          <p>Supports sprint groups with starts, underwater phases, and race execution.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Dragon Swim Team • Train Strong • Race Smart
+  </footer>
+
+  <div class="login-modal" id="loginModal" aria-hidden="true">
+    <div class="login-box" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+      <h3 id="loginTitle">Log In</h3>
+      <p>Access your swimmer account.</p>
+      <form class="login-form" id="loginForm">
+        <label>Email
+          <input type="email" name="email" placeholder="you@example.com" required />
+        </label>
+        <label>Password
+          <input type="password" name="password" placeholder="••••••••" required />
+        </label>
+        <div class="login-actions">
+          <button type="submit" class="signin-btn">Sign In</button>
+          <div class="register-text">New here? <a href="#" id="registerLink">Register</a></div>
+          <button type="button" class="modal-close" id="closeLogin">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const revealItems = document.querySelectorAll('.reveal');
+    const flashlightTargets = document.querySelectorAll('section, .card');
+    const topbar = document.getElementById('topbar');
+    const loginModal = document.getElementById('loginModal');
+    const openLogin = document.getElementById('openLogin');
+    const closeLogin = document.getElementById('closeLogin');
+    const loginForm = document.getElementById('loginForm');
+    const registerLink = document.getElementById('registerLink');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.2,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealItems.forEach((item) => observer.observe(item));
+
+    flashlightTargets.forEach((target) => {
+      target.addEventListener('mousemove', (event) => {
+        const rect = target.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        target.style.setProperty('--mx', `${x}px`);
+        target.style.setProperty('--my', `${y}px`);
+      });
+    });
+
+    const setTopbarState = () => {
+      topbar.classList.toggle('scrolled', window.scrollY > 16);
+    };
+
+    window.addEventListener('scroll', setTopbarState, { passive: true });
+    setTopbarState();
+
+    const toggleModal = (open) => {
+      loginModal.classList.toggle('open', open);
+      loginModal.setAttribute('aria-hidden', String(!open));
+      document.body.style.overflow = open ? 'hidden' : '';
+    };
+
+    openLogin.addEventListener('click', () => toggleModal(true));
+    closeLogin.addEventListener('click', () => toggleModal(false));
+    loginModal.addEventListener('click', (event) => {
+      if (event.target === loginModal) toggleModal(false);
+    });
+
+    loginForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO: Connect Firebase Auth sign-in here.
+      // Example hookup location:
+      // signInWithEmailAndPassword(auth, email, password)
+      alert('Connect Firebase sign-in in the script section near firebaseConfig.');
+    });
+
+    registerLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      // TODO: Connect Firebase registration flow here.
+      alert('Add register workflow (Firebase createUserWithEmailAndPassword).');
+    });
+
+    // Firebase connection placeholder:
+    // 1) Paste your Firebase config below.
+    // 2) Initialize app/auth and use inside submit handlers above.
+    const firebaseConfig = {
+      apiKey: 'PASTE_YOUR_API_KEY',
+      authDomain: 'PASTE_YOUR_AUTH_DOMAIN',
+      projectId: 'PASTE_YOUR_PROJECT_ID',
+      storageBucket: 'PASTE_YOUR_STORAGE_BUCKET',
+      messagingSenderId: 'PASTE_YOUR_MESSAGING_SENDER_ID',
+      appId: 'PASTE_YOUR_APP_ID'
+    };
+    console.log('Firebase config placeholder:', firebaseConfig.projectId);
+  </script>
+</body>
+</html>
