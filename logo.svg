@@ -10,6 +10,13 @@
   <path d="M24 28 C 42 8, 84 12, 102 36 C 94 24, 108 18, 122 22 C 108 26, 106 36, 112 46 C 100 38, 92 36, 84 40 C 76 44, 72 52, 70 62 C 66 46, 54 34, 40 32 Z" fill="url(#g1)"/>
   <circle cx="73" cy="58" r="6" fill="#fff"/>
   <circle cx="48" cy="86" r="6" fill="#fff"/>
+  <image 
+  href="images/image_desktop.jpg"
+  x="250"
+  y="20"
+  width="120"
+  height="100"
+/>
   <text x="130" y="78" font-size="34" font-family="Arial Black, Arial, sans-serif" fill="#111">DRAGON</text>
   <text x="132" y="108" font-size="28" font-family="Arial, sans-serif" fill="#111" letter-spacing="1">SWIM TEAM</text>
 </svg>
