@@ -27,20 +27,21 @@
       background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
       color: var(--text);
       line-height: 1.6;
-      padding-top: 84px;
+      padding-top: 66px;
     }
 
     .topbar {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0.5rem;
+      left: 0.6rem;
       z-index: 1000;
       display: flex;
       align-items: center;
-      padding: 0.8rem 1.25rem;
+      padding: 0.35rem 0.8rem;
       background: rgba(255, 255, 255, 0.9);
-      border-bottom: 1px solid var(--border);
+      border: 1px solid var(--border);
+      border-radius: 0.9rem;
+      width: fit-content;
       transition: backdrop-filter 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
     }
 
@@ -52,7 +53,7 @@
     }
 
     .logo {
-      width: min(320px, 70vw);
+      width: min(230px, 52vw);
       height: auto;
       display: block;
     }
@@ -85,15 +86,19 @@
       place-items: center;
       text-align: center;
       padding: 2rem;
-      background: radial-gradient(circle at top right, #f7f7f7, transparent 45%),
-                  radial-gradient(circle at bottom left, #efefef, transparent 40%);
+      background: linear-gradient(135deg, #ffffff 0%, #f2f2f2 58%, #e8e8e8 100%);
       border-bottom: 1px solid var(--border);
     }
 
     .hero h1 {
-      font-size: clamp(2rem, 6vw, 4.25rem);
+      font-size: clamp(2.2rem, 6vw, 4.4rem);
       margin-bottom: 0.75rem;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      font-weight: 900;
+      color: #121212;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.65), 0 4px 10px rgba(0,0,0,0.14);
     }
 
     .hero p {
@@ -304,7 +309,7 @@
 </head>
 <body>
   <div class="topbar" id="topbar">
-  <img class="logo" src="./images/15543-removebg-preview.png" alt="Dragon Swim Team logo" />
+    <img class="logo" src="logo.svg" alt="Dragon Swim Team logo" />
   </div>
 
   <header>
