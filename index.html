@@ -12,6 +12,8 @@
       --text: #2f2f2f;
       --muted: #6c6c6c;
       --border: #dddddd;
+      --button-grad: linear-gradient(135deg, #ff6a2a 0%, #d9481a 100%);
+      --button-grad-hover: linear-gradient(135deg, #ff7a3d 0%, #e25727 100%);
     }
 
     * {
@@ -55,22 +57,26 @@
       display: block;
     }
 
-    .login-trigger {
-      margin-top: 1.25rem;
-      border: 1px solid #1f1f1f;
-      background: #ffffff;
-      color: #111;
-      padding: 0.75rem 1.2rem;
-      border-radius: 999px;
-      font-weight: 600;
+    button {
+      border: 0;
+      background: var(--button-grad);
+      color: #ffffff;
+      font-weight: 700;
       cursor: pointer;
-      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 8px 16px rgba(217, 72, 26, 0.28);
     }
 
-    .login-trigger:hover {
-      background: #111;
-      color: #fff;
-      transform: translateY(-1px);
+    button:hover {
+      background: var(--button-grad-hover);
+      transform: scale(1.04);
+      box-shadow: 0 12px 22px rgba(217, 72, 26, 0.34);
+    }
+
+    .login-trigger {
+      margin-top: 1.25rem;
+      padding: 0.75rem 1.2rem;
+      border-radius: 999px;
     }
 
     header {
@@ -259,13 +265,8 @@
     }
 
     .signin-btn {
-      border: 0;
       border-radius: 0.75rem;
       padding: 0.75rem;
-      font-weight: 700;
-      color: #111;
-      background: #ffd84d;
-      cursor: pointer;
     }
 
     .register-text {
@@ -288,6 +289,16 @@
       cursor: pointer;
       text-decoration: underline;
       justify-self: center;
+      box-shadow: none;
+      transition: none;
+      transform: none;
+    }
+
+    .modal-close:hover {
+      background: transparent;
+      color: #333;
+      box-shadow: none;
+      transform: none;
     }
   </style>
 </head>
